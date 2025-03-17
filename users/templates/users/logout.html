@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Logout
+{% endblock title %}
+
+{% block content %}
+    <div class="content-section text-center">
+        <i class="fas fa-check-circle text-success fa-3x mb-3"></i>
+        <h2>You have been logged out</h2>
+        <div class="border-top pt-3">
+            <p class="mb-0">
+                <a href="{% url 'login' %}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login Again
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock content %}
