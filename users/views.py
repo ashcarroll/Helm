@@ -25,10 +25,10 @@ def register(request):
                 messages.warning(request, f"Group '{role}' does not exist")
             
             # Log the user in straight away
-            # login(request, user) TO-DO: uncomment this and update redirect when dashboard is created
+            login(request, user)
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            return redirect('login')
+            return redirect('dashboard')
 
     else:
         form = UserRegisterForm()
