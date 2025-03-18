@@ -18,7 +18,7 @@ class ProjectListView(LoginRequiredMixin, ListView):
         
         else:
             # IC sees their team's projects
-            return Project.objects.filter(team__in=user.teams.all())
+            return Project.objects.filter(project_team=user)
         
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
@@ -36,6 +36,7 @@ class ProjectCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         project = form.save(commit=False)
         project.manager = self.request.user
         project.save()
+        form.save_m2m()
         messages.success(self.request, "Project has been created successfully")
 
         return redirect('project_list')

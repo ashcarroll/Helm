@@ -18,7 +18,7 @@ class Project(models.Model):
     end_date = models.DateField()
     date_created = models.DateTimeField(auto_now_add=True)
     manager = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name = 'managed_projects')
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name='projects')
+    project_team = models.ManyToManyField(User, blank=True, related_name='project_team')
 
     def __str__(self):
         return self.name

@@ -11,6 +11,13 @@
         <p><strong>Description:</strong> {{ project.description }}</p>
         <p><strong>Start Date:</strong> {{ project.start_date }}</p>
         <p><strong>End Date:</strong> {{ project.end_date }}</p>
-        <p><strong>Team:</strong> {{ project.team }}</p>
+        <p><strong>Team:</strong></p>
+            <ul>
+                {% for user in project.project_team.all %}
+                    <li>{{ user.username }}</li>
+                {% empty %}
+                    <li>No team assigned</li>
+                {% endfor %}
+            </ul>
     </div>
 {% endblock content %}
