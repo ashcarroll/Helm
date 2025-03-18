@@ -56,6 +56,19 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     template_name = 'projects/project_detail.html'
     context_object_name = 'project'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        project = self.get_object()
+
+        is_manager = user.groups.filter(name='Manager').exists()
+        is_in_team = project.project_team.filter(pk=user.pk).exists()
+
+        context['is_manager'] = is_manager
+        context['is_in_team'] = is_in_team
+        return context
+
+
 
 class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Task
@@ -69,6 +82,7 @@ class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         task = form.save(commit=False)
         task.project = self.project
+        task.created_by = self.request.user
         task.save()
         messages.success(self.request, "Task created successfully")
         return redirect('project_detail', pk=self.project.pk)

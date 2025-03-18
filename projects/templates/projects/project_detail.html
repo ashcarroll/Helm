@@ -11,6 +11,8 @@
         <p><strong>Description:</strong> {{ project.description }}</p>
         <p><strong>Start Date:</strong> {{ project.start_date }}</p>
         <p><strong>End Date:</strong> {{ project.end_date }}</p>
+
+        <!-- Team Members -->
         <p><strong>Team:</strong></p>
             <ul>
                 {% for user in project.project_team.all %}
@@ -19,5 +21,32 @@
                     <li>No team assigned</li>
                 {% endfor %}
             </ul>
+
+        <!-- Tasks -->
+        <h4>Tasks</h4>
+        <ul>
+            {% for task in project.tasks.all %}
+            <li>
+                <strong>{{ task.title }}</strong>
+                ({{ task.get_status_display }})
+                - Assigned to:
+                {% if task.assigned_to %}
+                    {{ task.assigned_to.username }}
+                {% else %}
+                    None
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Create Task -->
+        {% if user.is_authenticated %}
+            <!-- If user or manager or project team member then show Create Task button -->
+            {% if is_manager or is_in_team %}
+            <a href="{% url 'task_create' project.pk %}" class="btn btn-secondary mt-3">
+                <i class="fa fa-plus"></i> Create Task
+            </a>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock content %}
