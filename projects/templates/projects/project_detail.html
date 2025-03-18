@@ -32,6 +32,7 @@
                 - Assigned to:
                 {% if task.assigned_to %}
                     {{ task.assigned_to.username }}
+                    <a href="{% url 'task_update' task.pk %}">Update</a>
                 {% else %}
                     None
                 {% endif %}
