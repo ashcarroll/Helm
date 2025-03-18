@@ -1,9 +1,9 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, DetailView
-from .models import Project
-from .forms import ProjectForm
+from .models import Project, Task
+from .forms import ProjectForm, TaskForm
 
 class ProjectListView(LoginRequiredMixin, ListView):
     model = Project
@@ -56,3 +56,37 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     template_name = 'projects/project_detail.html'
     context_object_name = 'project'
 
+
+class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'projects/task_create.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.project = get_object_or_404(Project, pk=kwargs['project_id'])
+        return super().dispatch(request, *args, **kwargs)
+    
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.project = self.project
+        task.save()
+        messages.success(self.request, "Task created successfully")
+        return redirect('project_detail', pk=self.project.pk)
+    
+    def test_func(self):
+        user = self.request.user
+
+        # Check if user is a Manager
+        if user.groups.filter(name='Manager').exists():
+            return True
+        
+        # Or if user is assigned the project team
+        if self.project.project_team.filter(pk=user.pk).exists():
+            return True
+        
+        # Otherwise deny 
+        return False
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "You don't have permission to create a task for this project")
+        return redirect('project_list')
