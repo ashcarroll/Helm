@@ -8,5 +8,18 @@
 <div class="container mt-4">
     <h2> Welcome to you Dashboard, {{ username }}!</h2>
     <p>This is your personal dashboard</p>
+
+    <!-- My Tasks -->
+    <h3>My Tasks</h3>
+    <ul>
+        {% for task in assigned_tasks %}
+            <li>
+                {{ task.title }} ({{ task.get_status_display }})
+                <a href="{% url 'task_update' task.pk %}">Update</a>
+            </li>
+        {% empty %}
+            <li>No assigned tasks</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock content %}

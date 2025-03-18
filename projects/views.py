@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 from .models import Project, Task
 from .forms import ProjectForm, TaskForm
 
@@ -104,3 +105,26 @@ class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def handle_no_permission(self):
         messages.error(self.request, "You don't have permission to create a task for this project")
         return redirect('project_list')
+    
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'projects/task_update.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.task = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        user = self.request.user
+        if user.groups.filter(name='Manager').exists():
+            return Task.objects.all()
+        
+        else:
+            return Task.objects.filter(assigned_to=user)
+    
+    def get_success_url(self):
+        project_pk = self.task.project.pk
+        return reverse_lazy('project_detail', kwargs={'pk':project_pk})
+
