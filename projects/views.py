@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 from .models import Project
 from .forms import ProjectForm
 
@@ -48,3 +48,10 @@ class ProjectCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # Error handling to protect view on the backend, incase URL is guessed and UI constraints are bypassed
         messages.error(self.request, "Only managers can create projects")
         return redirect('project_list')
+    
+
+class ProjectDetailView(LoginRequiredMixin, DetailView):
+    model = Project
+    template_name = 'projects/project_detail.html'
+    context_object_name = 'project'
+

@@ -17,8 +17,10 @@
     <ul class="list-group">
     {% for project in projects %}
     <li class="list-group-item">
-        <strong>{{ project.title }}</strong> -
-        {{ project.get_status_display }}
+        <a href="{% url 'project_detail' project.pk %}">
+            <strong>{{ project.title }}</strong>
+        </a>
+        - {{ project.get_status_display }}
         (Team: {{ project.team }})
         </li>
     {% empty %}
