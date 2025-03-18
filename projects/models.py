@@ -21,7 +21,7 @@ class Project(models.Model):
     project_team = models.ManyToManyField(User, blank=True, related_name='project_team')
 
     def __str__(self):
-        return self.name
+        return self.title
     
 
 class Task(models.Model):
