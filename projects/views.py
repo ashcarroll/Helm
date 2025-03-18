@@ -1,9 +1,31 @@
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from .models import Project
 from .forms import ProjectForm
+
+class ProjectListView(LoginRequiredMixin, ListView):
+    model = Project
+    template_name = 'projects/project_list.html'
+    context_object_name = 'projects'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.groups.filter(name='Manager').exists():
+            # Managers see the projects they manage
+            return Project.objects.filter(manager=user)
+        
+        else:
+            # IC sees their team's projects
+            return Project.objects.filter(team__in=user.teams.all())
+        
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        # Adding a boolean to see if user is a manager
+        context['is_manager'] = self.request.user.groups.filter(name='Manager').exists()
+        return context
+
 
 class ProjectCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Project
