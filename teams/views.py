@@ -47,3 +47,8 @@ class TeamListView(LoginRequiredMixin, ListView):
         # Check if user is a manager
         context['is_manager'] = self.request.user.groups.filter(name='Manager').exists()
         return context
+    
+class TeamDetailView(LoginRequiredMixin, DetailView):
+    model = Team
+    template_name = 'teans/team_detail.html'
+    context_object_name = 'team'
