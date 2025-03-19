@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView
 from .models import Team
@@ -50,5 +51,25 @@ class TeamListView(LoginRequiredMixin, ListView):
     
 class TeamDetailView(LoginRequiredMixin, DetailView):
     model = Team
-    template_name = 'teans/team_detail.html'
+    template_name = 'teams/team_detail.html'
     context_object_name = 'team'
+
+class TeamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Team
+    form_class = TeamForm
+    template_name = 'teams/team_update.html'
+    context_object_name = 'team'
+    success_url = reverse_lazy('team_list')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Team updated")
+        return super().form_valid(form)
+    
+    def test_func(self):
+        # Only this team's manager can update
+        team = self.get_object()
+        return team.manager == self.request.user
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "You do not have permission to edit this team")
+        return redirect('team_list')
