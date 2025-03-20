@@ -2,9 +2,10 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView, ListView, DetailView, UpdateView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import Project, Task
 from .forms import ProjectForm, TaskForm
+
 
 class ProjectListView(LoginRequiredMixin, ListView):
     model = Project
@@ -50,7 +51,7 @@ class ProjectCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # Error handling to protect view on the backend, incase URL is guessed and UI constraints are bypassed
         messages.error(self.request, "Only managers can create projects")
         return redirect('project_list')
-    
+
 
 class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
@@ -69,6 +70,40 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         context['is_in_team'] = is_in_team
         return context
 
+
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'projects/project_update.html'
+    context_object_name = 'project'
+
+    def form_valid(self, form):
+        messages.success(self.request, "Project updated successfully")
+        return super().form_valid(form)
+    
+    def test_func(self):
+        # Only the manager of the project can update
+        project = self.get_object()
+        return project.manager == self.request.user
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "You don't have permission to edit this project")
+        return redirect('project_list')
+
+
+class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Project
+    template_name = 'projects/project_delete.html'
+    success_url = reverse_lazy('project_list')
+
+    def test_func(self):
+        # Only the manager of the project can delete it
+        project = self.get_object()
+        return project.manager == self.request.user
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "You don't have permission to delete this project")
+        return redirect('project_list')
 
 
 class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
