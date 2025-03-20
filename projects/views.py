@@ -89,6 +89,10 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def handle_no_permission(self):
         messages.error(self.request, "You don't have permission to edit this project")
         return redirect('project_list')
+    
+    def get_success_url(self):
+        return reverse_lazy('project_detail', kwargs={'pk': self.object.pk})
+
 
 
 class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
