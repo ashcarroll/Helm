@@ -1,8 +1,8 @@
 from django.shortcuts import redirect
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView, ListView, DetailView, UpdateView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import Team
 from .forms import TeamForm
 
@@ -48,11 +48,13 @@ class TeamListView(LoginRequiredMixin, ListView):
         # Check if user is a manager
         context['is_manager'] = self.request.user.groups.filter(name='Manager').exists()
         return context
-    
+
+
 class TeamDetailView(LoginRequiredMixin, DetailView):
     model = Team
     template_name = 'teams/team_detail.html'
     context_object_name = 'team'
+
 
 class TeamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Team
@@ -72,4 +74,22 @@ class TeamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     def handle_no_permission(self):
         messages.error(self.request, "You do not have permission to edit this team")
+        return redirect('team_list')
+
+
+class TeamDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Team
+    template_name = 'teams/team_delete.html'
+    context_object_name = 'team'
+
+    def get_success_url(self):
+        messages.success(self.request, "Team delelted successfully")
+        return reverse('team_list')
+    
+    def test_func(self):
+        team = self.get_object()
+        return team.manager == self.request.user
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "You do not have permission to delete this team")
         return redirect('team_list')
