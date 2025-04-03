@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import Project, Task
@@ -167,3 +167,19 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         project_pk = self.task.project.pk
         return reverse_lazy('project_detail', kwargs={'pk':project_pk})
 
+
+class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Task
+    template_name = 'projects/task_delete.html'
+
+    def get_success_url(self):
+        return reverse ('project_detail', kwargs={'pk': self.object.project.pk})
+    
+    def test_func(self):
+        task = self.get_object()
+        # Allow delete if cuurent user is creator of task or in the Manager group
+        return (self.request.user == task.created_by) or self.request.user.groups.filter(name='Manager').exists()
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "You don't have permission to delete this task")
+        return redirect(self.get_success_url())

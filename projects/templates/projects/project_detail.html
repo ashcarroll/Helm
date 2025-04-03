@@ -38,17 +38,30 @@
         <h4>Tasks</h4>
         <ul>
             {% for task in project.tasks.all %}
-            <li>
-                <strong>{{ task.title }}</strong>
-                ({{ task.get_status_display }})
-                - Assigned to:
-                {% if task.assigned_to %}
-                    {{ task.assigned_to.username }}
-                    <a href="{% url 'task_update' task.pk %}">Update</a>
-                {% else %}
-                    None
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ task.title }}</strong>
+                    ({{ task.get_status_display }})
+                    - Assigned to:
+                    {% if task.assigned_to %}
+                        {{ task.assigned_to.username }}
+                    {% else %}
+                        None
+                    {% endif %}
+                </div>
+                {% if task.created_by == user or is_manager %}
+                <div class="btn-group">
+                    <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-info me-1">
+                        <i class="fas fa-pen"></i> Update
+                    </a>
+                    <a href="{% url 'task_delete' task.pk %}" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                </div>
                 {% endif %}
             </li>
+            {% empty %}
+            <li class="list-group-item">No tasks yet</li>
             {% endfor %}
         </ul>
 

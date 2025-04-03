@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete Task
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Are you sure you want to delete {{ object.title }}?</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i> Delete Task
+        </button>
+        <a href="{% url 'project_detail' object.project.pk %}" class="btn btn-secondary">
+            <i class="fas fa-times"></i> Cancel
+        </a>
+    </form>
+</div>
+{% endblock content %}
