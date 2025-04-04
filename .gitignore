@@ -6,3 +6,6 @@ db.sqlite3
 .env
 .DS_Store
 staticfiles
+media/*
+# Allow a default image
+!media/default.jpg

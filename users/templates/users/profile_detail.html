@@ -1,19 +1,16 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 
 {% block title %}
-    Update Profile
+    Your Profile
 {% endblock title %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Update Your Profile</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-pen"></i> Update
-        </button>
-    </form>
+    <h2>{{ profile.user.username }}'s Profile</h2>
+    <img src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s profile picture" class="img-thumbnail" style="max-width: 200px;">
+    <p> Email: {{ profile.user.email }} </p>
+    <a href="{% url 'profile_update' %}" class="btn bth-secondary">
+        <i class="fas fa-edit"></i> Update Profile
+    </a>
 </div>
 {% endblock content %}
