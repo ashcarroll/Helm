@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from django.contrib.auth import login
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, ProfileUpdateForm
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import UpdateView, DetailView
+from .models import Profile
+
 
 def register(request):
     if request.method == 'POST':
@@ -33,3 +38,22 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = ProfileUpdateForm
+    template_name = 'users/profile_update.html'
+    success_url = reverse_lazy('profile')
+
+    def get_object(self):
+        return self.request.user.profile
+    
+
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = Profile
+    template_name = 'users/profile_detail.html'
+    context_object_name = 'profile'
+
+    def get_object(self):
+        return self.request.user.profile
