@@ -181,5 +181,6 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return (self.request.user == task.created_by) or self.request.user.groups.filter(name='Manager').exists()
     
     def handle_no_permission(self):
+        task = self.get_object()
         messages.error(self.request, "You don't have permission to delete this task")
-        return redirect(self.get_success_url())
+        return redirect('project_detail', pk=task.project.pk)
