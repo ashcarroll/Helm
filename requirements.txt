@@ -7,4 +7,5 @@ python-dotenv
 django-crispy-forms
 crispy-bootstrap5
 Pillow
+cloudinary==1.42.1
 django-cloudinary-storage

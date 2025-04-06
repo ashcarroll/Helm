@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2>{{ profile.user.username }}'s Profile</h2>
-    <img src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s profile picture" class="img-thumbnail" style="max-width: 200px;">
+    <img src="{{ profile.get_image_url }}" alt="{{ profile.user.username }}'s profile picture" class="img-thumbnail" style="max-width: 200px;">
     <p> Email: {{ profile.user.email }} </p>
     <a href="{% url 'profile_update' %}" class="btn bth-secondary">
         <i class="fas fa-edit"></i> Update Profile
