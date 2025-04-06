@@ -1,0 +1,268 @@
+/* Global Styles */
+
+:root {
+    /* Colour variables */
+    --primary: #3A77FF;
+    --primary-dark: #2D5FC9;
+    --secondary: #6C757D;
+    --success: #28A745;
+    --danger: #DC3545;
+    --warning: #FFC107;
+    --info: #17A2B8;
+    --light: #F8F9FA;
+    --dark: #343A40;
+    --gray-100: #F8F9FA;
+    --gray-200: #E9ECEF;
+    --gray-300: #DEE2E6;
+    --gray-400: #CED4DA;
+    --gray-500: #ADB5BD;
+    --gray-600: #6C757D;
+    --gray-700: #495057;
+    --gray-800: #343A40;
+    --gray-900: #212529;
+
+    /* Project status colours */
+    --status-not-started: #6C757D;
+    --status-on-track: #28A745;
+    --status-at-risk: #FFC107;
+    --status-blocked: #DC3545;
+    --status-complete: #17A2B8;
+
+    /* Task status colours */
+    --task-todo: #6C757D;
+    --task-in-progress: #17A2B8;
+    --task-blocked: #DC3545;
+    --task-done: #28A745;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 3rem;
+
+    /* Border radius */
+    --border-radius-sm: 0.25rem;
+    --border-radius-md: 0.5rem;
+    --border-radius-lg: 1rem;
+
+    /* Shadows */
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+/* General Styles */
+body {
+    /* Using system fonts for better performance, load times and familiarity */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--gray-800);
+    background-color: #f5f7fa;
+}
+
+/* Navbar Styling */
+.navbar-dark.bg-dark {
+    background-color: #1E293B !important;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+/* Cards and Containers */
+.card {
+    border: none;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translate(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.container {
+    padding: var(--spacing-md);
+}
+
+.section-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--gray-800);
+    border-bottom: 2px solid var(--gray-300);
+    padding-bottom: var(--spacing-sm);
+}
+
+/* Buttons */
+.btn {
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark); 
+}
+
+/* Status Badges */
+.badge {
+    padding: 0.4em 0.6em;
+    font-weight: 500;
+    border-radius: var(--border-radius-sm);
+}
+
+.badge-not-started {
+    background-color: var(--status-not-started);
+    color: white;
+}
+
+.badge-on-track {
+    background-color: var(--status-on-track);
+    color: white;
+}
+
+.badge-at-risk {
+    background-color: var(--status-at-risk);
+    color: var(--gray-900);
+}
+
+.badge-blocked {
+    background-color: var(--status-blocked);
+    color: white;
+}
+
+.badge-complete {
+    background-color: var(--status-complete);
+    color: white;
+}
+
+.badge-todo {
+    background-color: var(--task-todo);
+    color: white;
+}
+
+.badge-in-progress {
+    background-color: var(--task-in-progress);
+    color: white;
+}
+
+.badge-blocked-task {
+    background-color: var(--task-blocked);
+    color: white;
+}
+
+.badge-done {
+    background-color: var(--task-done);
+    color: white;
+}
+
+/* List Group Items */
+.list-group-item {
+    border: 1px solid var(--gray-200);
+    margin-bottom: 0.25rem;
+    transition: background-color 0.2s;
+}
+
+.list-group-item:hover {
+    background-color: var(--gray-100);
+}
+
+/* Forms */
+.form-control {
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--gray-400);
+    padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(58, 119, 255, 0.25);
+}
+
+/* Dashboard Items */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-card {
+    background-color: white;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0;
+    font-size: 1.8rem;
+}
+
+.stat-card p {
+    color: var(--gray-600);
+    margin-bottom: 0;
+}
+
+/* Project and Task Cards */
+.project-card, .task-card {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    background-color: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.project-card h3, .task-card h3 {
+    margin-top: 0;
+    font-weight: 600;
+}
+
+.project-card_meta, .task-card_meta {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.project-card_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--gray-200);
+}
+
+/* Profile Page */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--gray-300);
+}
+
+.profile-container {
+    background-color: white;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-info {
+    margin-left: var(--shadow-lg);
+}
