@@ -1,1 +1,10 @@
 Django
+gunicorn
+whitenoise
+psycopg2
+dj_database_url
+python-dotenv
+django-crispy-forms
+crispy-bootstrap5
+Pillow
+django-cloudinary-storage
