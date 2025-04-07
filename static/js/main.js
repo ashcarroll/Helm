@@ -75,4 +75,15 @@ document.addEventListener('DOMContentLoaded', function() {
             form.classList.add('was-validated');
         }, false);
     });
+
+    // Date formatting
+    var dateElements = document.querySelectorAll('.format-date');
+    dateElements.forEach(function(element) {
+        var date = new Date(element.textContent);
+        element.textContent = date.toLocaleDateString('en-IE', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    });
 });
