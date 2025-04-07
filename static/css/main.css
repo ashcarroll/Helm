@@ -244,6 +244,14 @@ main {
     background-color: white;
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    height: 100%;
+    border: none;
+}
+
+.project-card:hover, .task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
 }
 
 .project-card h3, .task-card h3 {
@@ -251,19 +259,140 @@ main {
     font-weight: 600;
 }
 
-.project-card_meta, .task-card_meta {
+.project-card__meta, .task-card__meta {
     color: var(--gray-600);
     font-size: 0.875rem;
     margin-bottom: var(--spacing-sm);
+    display: flex;
+    gap: 1rem;
 }
 
-.project-card_footer {
+.project-card__meta-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+}
+
+.project-card__meta-item i {
+    margin-right: 0.25rem;
+}
+
+.project-card__footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: var(--spacing-md);
     padding-top: var(--spacing-sm);
     border-top: 1px solid var(--gray-200);
+    padding: 0.5rem 1.25rem 1.25rem;
+    background-color: transparent;
+}
+
+.project-card__header {
+    padding: 1.25rem 1.25rem 0.5rem;
+}
+
+.project-card__body {
+    padding: 0.5rem 1.25rem;
+}
+
+.project-card__progress {
+    height: 6px;
+    margin-top: 1rem;
+}
+
+.project-card.not-started { 
+    border-top: 3px solid var(--status-not-started); 
+}
+
+.project-card.on-track {
+    border-top: 3px solid var(--status-on-track); 
+}
+
+.project-card.at-risk { 
+    border-top: 3px solid var(--status-at-risk); 
+}
+
+.project-card.blocked { 
+    border-top: 3px solid var(--status-blocked); 
+}
+
+.project-card.complete { 
+    border-top: 3px solid var(--status-complete); 
+}
+
+.task-card.todo {
+    border-left-color: var(--task-todo);
+}
+
+.task-card.in-progress {
+    border-left-color: var(--task-in-progress);
+}
+
+.task-card.blocked {
+    border-left-color: var(--task-blocked);
+}
+
+.task-card.done {
+    border-left-color: var(--task-done);
+}
+
+.task-card.todo, .task-card.in-progress,
+.task-card.blocked, .task-card.done {
+    border-left: 4px solid transparent;
+    transition: all 0.2s;
+}
+
+.task-card.todo:hover, .task-card.in-progress:hover,
+.task-card.blocked:hover, .task-card.done:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Status indicators */
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.status-indicator.not-started {
+    background-color: var(--status-not-started);
+}
+
+.status-indicator.on-track {
+    background-color: var(--status-on-track);
+}
+
+.status-indicator.at-risk { 
+    background-color: var(--status-at-risk); 
+}
+
+.status-indicator.blocked { 
+    background-color: var(--status-blocked); 
+}
+
+.status-indicator.complete { 
+    background-color: var(--status-complete); 
+}
+
+/* Project List Filter */
+.filter-container {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-option {
+    flex: 0 0 auto;
+    margin-right: 0.5rem;
+    white-space: nowrap;
 }
 
 /* Profile Page */

@@ -1,22 +1,65 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
     Project List
 {% endblock title %}
 
+
 {% block content %}
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2><i class="fa fa-list"></i> My Projects</h2>
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+            <i class="fas fa-folder-open me-2"></i> Projects
+        </h2>
+
         {% if is_manager %}
             <a href="{% url 'project_create' %}" class="btn btn-primary">
-            <i class="fa fa-plus"></i> Create Project
+            <i class="fa fa-plus me-1"></i> Create Project
             </a>
         {% endif %}
     </div>
+
+    <!-- Filters -->
+    <div class="filter-container mb-4">
+        <div class="filter-option">
+            <button type="button" class="btn btn-sm btn-outline-secondary active filter-btn" data-filter="all">
+                All Projects
+            </button>
+        </div>
+        <div class="filter-option">
+            <button type="button" class="btn btn-sm btn-outline-secondary filter-btn" data-filter="NOT_STARTED">
+                <span class="status-indicator not-started"></span> Not Started
+            </button>
+        </div>
+        <div class="filter-option">
+            <button type="button" class="btn btn-sm btn-outline-secondary filter-btn" data-filter="ON_TRACK">
+                <span class="status-indicator on-track"></span> On Track
+            </button>
+        </div>
+        <div class="filter-option">
+            <button type="button" class="btn btn-sm btn-outline-secondary filter-btn" data-filter="AT_RISK">
+                <span class="status-indicator at-risk"></span> At Risk
+            </button>
+        </div>
+        <div class="filter-option">
+            <button type="button" class="btn btn-sm btn-outline-secondary filter-btn" data-filter="BLOCKED">
+                <span class="status-indicator blocked"></span> Blocked
+            </button>
+        </div>
+        <div class="filter-option">
+            <button type="button" class="btn btn-sm btn-outline-secondary filter-btn" data-filter="COMPLETE">
+                <span class="status-indicator complete"></span> Complete
+            </button>
+        </div>
+    </div>
+
+
+
     <ul class="list-group">
     {% for project in projects %}
-    <li class="list-group-item">
+    <li class="list-group-item project-item" data-status="{{ project.status }}">
         <a href="{% url 'project_detail' project.pk %}">
             <strong>{{ project.title }}</strong>
         </a>
@@ -27,4 +70,8 @@
     {% endfor %}
     </ul>
 </div>
-{% endblock content %} 
+
+{% endblock content %}
+{% block extra_js %}
+<script src="{% static 'js/project-list.js' %}"></script>
+{% endblock %}
