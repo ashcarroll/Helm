@@ -53,11 +53,30 @@
 }
 
 /* General Styles */
+html, body {
+    height: 100%;
+}
+
 body {
     /* Using system fonts for better performance, load times and familiarity */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: var(--gray-800);
     background-color: #f5f7fa;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    /* Make the main content area expand to fill available space */
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex-shrink: 0;
+    background-color: #1E293B;
+    color: white;
+    padding: 1rem 0;
+    margin-top: auto;
 }
 
 /* Navbar Styling */
