@@ -84,6 +84,47 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <!-- Tasks -->
+        <div class="col-md-12 mb-4">
+            <div class="card card-dashboard">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">My Recent Tasks</h5>
+                    <a href="{% url 'project_list' %}" class="btn btn-sm btn-outline-primary">View All Projects</a>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for task in assigned_tasks|slice:":5" %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">{{ task.title }}</h6>
+                                    <p class="text-muted mb-0 small">{{ task.project.title }}</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="task-status" data-status="{{ task.status }}">
+                                        {{ task.get_status_display }}
+                                    </span>
+                                    {% if task.due_date %}
+                                    <span class="ms-3 small text-muted">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span class="format-date">{{ task.due_date|date:"Y-m-d" }}</span>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item text-center py-4">
+                            <p class="mb-0 text-muted">No tasks are currently assigned to you</p>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
 
