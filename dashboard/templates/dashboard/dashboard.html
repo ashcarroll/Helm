@@ -1,25 +1,92 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
     Dashboard
 {% endblock title %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2> Welcome to you Dashboard, {{ username }}!</h2>
-    <p>This is your personal dashboard</p>
+<div class="container py-4">
 
-    <!-- My Tasks -->
-    <h3>My Tasks</h3>
-    <ul>
-        {% for task in assigned_tasks %}
-            <li>
-                {{ task.title }} ({{ task.get_status_display }})
-                <a href="{% url 'task_update' task.pk %}">Update</a>
-            </li>
-        {% empty %}
-            <li>No assigned tasks</li>
-        {% endfor %}
-    </ul>
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+            <i class="fas fa-tachometer-alt me-2"></i> {{ user.username }}'s Dashboard
+        </h2>
+        <div>
+            <span class="text-muted me-2"> Welcome, {{ user.username }}!</span>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card card-dashboard h-100">
+                <div class="card-body text-center">
+                    <h2 class="display-4 mb-0 text-primary">{{ active_projects_count|default:0 }}</h2>
+                    <p class="text-muted mb-0">Active Projects</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card card-dashboard h-100">
+                <div class="card-body text-center">
+                    <h2 class="display-4 mb-0 text-info">{{ open_tasks_count|default:0 }}</h2>
+                    <p class="text-muted mb-0">Open Tasks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card card-dashboard h-100">
+                <div class="card-body text-center">
+                    <h2 class="display-4 mb-0 text-success">{{ completed_tasks_count|default:0 }}</h2>
+                    <p class="text-muted mb-0">Completed Tasks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card card-dashboard h-100">
+                <div class="card-body text-center">
+                    <h2 class="display-4 mb-0 text-warning">{{ upcoming_due_count|default:0 }}</h2>
+                    <p class="text-muted mb-0">Due This Week</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts ROw -->
+    <div class="row mb-4">
+        <!-- Project Status Pie Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card card-dashboard h-100">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Project Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="projectStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Completion Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card card-dashboard h-100">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Task Completion Trend</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="taskCompletionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

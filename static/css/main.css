@@ -237,6 +237,19 @@ main {
     margin-bottom: 0;
 }
 
+.chart-container {
+    height: 250px;
+    margin-bottom: 1.5rem;
+}
+
+.card-dashboard {
+    transition: transform 0.2s;
+}
+
+.card-dashboard:hover {
+    transform: translateY(-5px);
+}
+
 /* Project and Task Cards */
 .project-card, .task-card {
     padding: var(--spacing-md);
