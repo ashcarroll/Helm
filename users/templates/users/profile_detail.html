@@ -34,15 +34,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-md-3 text-muted">Username:</div>
+                            <div class="col-md-5 text-muted">Username:</div>
                             <div class="col-md-9">{{ profile.user.username }}</div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-md-3 text-muted">Email:</div>
+                            <div class="col-md-5 text-muted">Email:</div>
                             <div class="col-md-9">{{ profile.user.email }}</div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-md-3 text-muted">Role:</div>
+                            <div class="col-md-5 text-muted">Role:</div>
                             <div class="col-md-9">
                                 {% if profile.user.groups.all %}
                                     {% for group in profile.user.groups.all %}
