@@ -66,8 +66,30 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         is_manager = user.groups.filter(name='Manager').exists()
         is_in_team = project.project_team.filter(pk=user.pk).exists()
 
+        # Group tasks by status
+        tasks_by_status = {
+            'TODO': project.tasks.filter(status='TODO'),
+            'IN_PROGRESS': project.tasks.filter(status='IN_PROGRESS'),
+            'BLOCKED': project.tasks.filter(status='BLOCKED'),
+            'DONE': project.tasks.filter(status='DONE')
+        }
+
+        # Calculate completion percent
+        total_tasks = project.tasks.count()
+        completed_tasks = project.tasks.filter(status='DONE').count
+        completion_percentage = 0
+        if total_tasks >0:
+            completion_percentage = int((completed_tasks / total_tasks)* 100)
+
         context['is_manager'] = is_manager
         context['is_in_team'] = is_in_team
+        context['tasks_by_status'] = tasks_by_status
+        context['completion_percentage'] = completion_percentage
+        context['todo_tasks'] = tasks_by_status['TODO']
+        context['in_progress_tasks'] = tasks_by_status['IN_PROGRESS']
+        context['blocked_tasks'] = tasks_by_status['BLOCKED']
+        context['done_tasks'] = tasks_by_status['DONE']
+
         return context
 
 
