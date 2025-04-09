@@ -23,7 +23,15 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
-
+    def completion_percentage(self):
+        total_tasks = self.tasks.count()
+        if total_tasks == 0:
+            return 0
+        
+        completed_tasks = self.tasks.filter(status='DONE').count()
+        return round((completed_tasks / total_tasks) * 100)
+    
+    
 class Task(models.Model):
     STATUS_CHOICES = [
         ('TODO', 'To Do'),

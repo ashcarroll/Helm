@@ -1,20 +1,98 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
     Team Detail
 {% endblock title %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>{{ team.name }}</h2>
-    <p>Manager: {{ team.manager.username }}</p>
-    <p>Members:</p>
-    <ul>
-        {% for member in team.members.all %}
-            <li>{{ member.username }}</li>
-        {% empty %}
-            <li>No team members</li>
-        {% endfor %}
-    </ul>
+<div class="container py-4">
+    <!-- Back Button -->
+    <a href="{% url 'team_list' %}" class="btn btn-sm btn-outline-secondary mb-3">
+        <i class="fas fa-arrow-left me-1"></i> Back to Teams
+    </a>
+
+    <!-- Team Header -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h3>{{ team.name }}</h3>
+                    <p class="text-muted">
+                        <i class="fas fa-user-tie me-1"></i> Manager: {{ team.manager.username }}
+                    </p>
+                </div>
+
+                {% if request.user == team.manager %}
+                <div>
+                    <a href="{% url 'team_update' team.pk %}" class="btn btn-sm btn-outline-primary me-1">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'team_delete' team.pk %}" class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Members -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Team Members</h5>
+            <span class="badge bg-primary rounded-pill">{{ team.members.count }} members</span>
+        </div>
+        <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
+                {% for member in team.members.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-user me-2"></i> {{ member.username }}
+                        {% if member.email %}
+                        <small class="text-muted d-block ms-4">{{ member.email }}</small>
+                        {% endif %}
+                    </div>
+                    <span class="badge bg-info rounded-pill">{{ member.assigned_tasks.all|length }} tasks</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-center text-muted">No team members assigned</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Team Projects -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Team Projects</h5>
+        </div>
+        <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
+                {% for project in projects %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="{% url 'project_detail' project.pk %}" class="text-decoration-none">
+                            <strong>{{ project.title }}</strong>
+                        </a>
+                        <span class="ms-2 project-status" data-status="{{ project.status }}">
+                            {{ project.get_status_display }}
+                        </span>
+                    </div>
+
+                    <!-- Completion percentage bar -->
+                    <div style="width: 100px;">
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: {{ project.completion_percentage|default:0 }}%"></div>
+                        </div>
+                        <small class="text-muted text-end d-block">{{ project.completion_percentage|default:0 }}%</small>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-center text-muted">No projects assigned to this team</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock content %}
