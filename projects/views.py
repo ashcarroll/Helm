@@ -76,7 +76,7 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 
         # Calculate completion percent
         total_tasks = project.tasks.count()
-        completed_tasks = project.tasks.filter(status='DONE').count
+        completed_tasks = project.tasks.filter(status='DONE').count()
         completion_percentage = 0
         if total_tasks >0:
             completion_percentage = int((completed_tasks / total_tasks)* 100)
