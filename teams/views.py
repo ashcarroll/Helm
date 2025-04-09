@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import Team
 from .forms import TeamForm
+from projects.models import Project
 
 class TeamCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Team 
@@ -54,6 +55,23 @@ class TeamDetailView(LoginRequiredMixin, DetailView):
     model = Team
     template_name = 'teams/team_detail.html'
     context_object_name = 'team'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        team = self.get.object()
+
+        team_projects = Project.objects.filter(project_team__in=team.members.all()).distinct()
+
+        for project in team_projects:
+            total_tasks = project.tasks.count()
+            if total_tasks > 0:
+                completed_tasks = project.tasks.filter(status='DONE').count()
+                project.completion_percentage = int((completed_tasks / total_tasks)* 100)
+            else:
+                project.completion_percentage = 0
+        
+        context['projects'] = team_projects
+        return context
 
 
 class TeamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
