@@ -58,7 +58,7 @@ class TeamDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        team = self.get.object()
+        team = self.get_object()
 
         team_projects = Project.objects.filter(project_team__in=team.members.all()).distinct()
 
