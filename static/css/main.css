@@ -432,45 +432,26 @@ main {
 /* Select2 Fixes and Overrides */
 
 /* Fix for blue highlight on selected items */
-.select2-container--classic .select2-results__option--highlighted[aria-selected],
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background-color: #f8f9fa !important;
     color: #212529 !important;
 }
 
-.select2-container--classic .select2-results__option[aria-selected=true],
 .select2-container--default .select2-results__option[aria-selected=true] {
     background-color: #e9ecef;
 }
 
-/* Remove borders from selection items*/
-.select2-container--classic .select2-selection--multiple .select2-selection__choice,
+/* Fix for the selection pills */
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: transparent !important;
-    border: none !important;
-    border-radius: 0;
-    margin-top: 4px;
-    margin-right: 4px;
-    padding: 2px 2px 2px 5px;
-    position: relative;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: bottom;
-    white-space: nowrap;
-    box-shadow: none;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    color: #212529;
 }
 
-/* Create a left border for items instead of a box */
-.select2-selection__choice__pill {
-    position: relative;
-    padding-left: 8px !important;
-    margin-right: 8px;
-    border-left: 3px solid #3A77FF !important;
-    font-size: 0.875rem;
-}
-
-/* Style the remove button */
+/* Remove the blue numbered button */
 .select2-selection__choice__remove {
     border: none !important;
     background: none !important;
@@ -479,16 +460,7 @@ main {
 }
 
 /* Clean up the remove button spacing */
-.select2-container--classic .select2-selection--multiple .select2-selection__choice__remove,
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     margin-right: 5px;
     color: #6c757d;
-}
-
-/* Make the container look cleaner */
-.select2-container--classic .select2-selection--multiple,
-.select2-container--default .select2-selection--multiple {
-    border: 1px solid #ced4da !important;
-    border-radius: 0.25rem;
-    padding: 4px 6px;
 }
