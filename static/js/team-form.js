@@ -10,7 +10,6 @@ $(document).ready(function() {
         templateSelection: function(data) {
             if (!data.id) { return data.text; }
             return $('<span class="select2-selection__choice__pill">' + data.text + '</span>');
-        }, 
-        selectionCssClass: 'select2-selection--clean'
+        }
     });
 });
