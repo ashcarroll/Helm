@@ -9,7 +9,6 @@ from django.views.generic import UpdateView, DetailView
 from .models import Profile
 
 
-
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
