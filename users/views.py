@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
 from django.contrib.auth import login
 from .forms import UserRegisterForm, ProfileUpdateForm
 from django.contrib import messages
@@ -7,9 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView, DetailView
 from .models import Profile
-from django.http import JsonResponse
-from django.db.models import Q
-from django.contrib.auth.decorators import login_required
+
 
 
 def register(request):
