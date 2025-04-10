@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.contrib.auth import login
 from .forms import UserRegisterForm, ProfileUpdateForm
 from django.contrib import messages
@@ -7,6 +7,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView, DetailView
 from .models import Profile
+from django.http import JsonResponse
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -57,3 +60,44 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         return self.request.user.profile
+    
+
+@login_required
+def search_users(request):
+    query = request.GET.get('q', '')
+    page = int(request.GET.get('page', 1))
+    page_size = 10
+
+    # Filter users based on search query
+    if query:
+        users = User.objects.filter(
+            Q(username__icontains=query) |
+            Q(email__icontains=query) |
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query)
+        )
+    else:
+        users = User.objects.all()
+
+    # Pagination for results
+    start = (page -1)* page_size
+    end = page * page_size
+
+    # Format results for Select2
+    total = users.count()
+    users_page = users[start:end]
+
+    results = [
+        {
+            'id': user.id,
+            'text': user.username,
+            'email': user.email
+        } for user in users_page
+    ]
+
+    return JsonResponse({
+        'results': results,
+        'pagination': {
+            'more': total > (page * page_size)
+        }
+    })

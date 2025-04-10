@@ -5,7 +5,7 @@ from .models import Team
 class TeamForm(forms.ModelForm):
     members = forms.ModelMultipleChoiceField(
         queryset = User.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'select2-multiple'}),
         required = False
     )
 

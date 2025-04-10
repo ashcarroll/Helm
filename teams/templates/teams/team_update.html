@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}
     Update Team
@@ -17,3 +18,7 @@
     </form>
 </div>
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/team-form.js' %}"></script>
+{% endblock %}
