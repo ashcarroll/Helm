@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialise Select2 for multiple selection
-    $('.select2-multiple').select({
+    $('.select2-multiple').select2({
         theme: 'bootstrap-5',
         width: '100%',
         placeholder: 'Select team members',
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return {
                     results: data.results,
                     pagination: {
-                        more: data.paginatino.more
+                        more: data.pagination.more
                     }
                 };
             },
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return user.text;
         }
 
-        return $('<span><strong>' + user.text + '</strong>' + (user.email ? ' (' + user.email + ')' : '') + '</span');
+        return $('<span><strong>' + user.text + '</strong>' + (user.email ? ' (' + user.email + ')' : '') + '</span>');
     }
 
     // Format the selection options

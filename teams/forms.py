@@ -5,7 +5,10 @@ from .models import Team
 class TeamForm(forms.ModelForm):
     members = forms.ModelMultipleChoiceField(
         queryset = User.objects.all(),
-        widget=forms.SelectMultiple(attrs={'class': 'select2-multiple'}),
+        widget=forms.SelectMultiple(attrs={
+            'class': 'form-control select2-multiple',
+            'data-placeholder': 'Select team members',
+        }),
         required = False
     )
 
