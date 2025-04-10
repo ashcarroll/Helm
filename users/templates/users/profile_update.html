@@ -1,19 +1,48 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}
     Update Profile
 {% endblock title %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Update Your Profile</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-pen"></i> Update
-        </button>
-    </form>
+<div class="container py-4">
+    <!-- Back button -->
+    <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary mb-3">
+        <i class="fas fa-arrow-left me-1"></i> Back to Profile
+    </a>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0"><i class="fas fa-user-edit me-2"></i>Update Profile</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3 text-center mb-3 mb-md-0">
+                    <img src="{{ request.user.profile.get_image_url }}" 
+                        alt="{{ request.user.username }}'s current profile picture" 
+                        class="profile-image mb-3">
+                    <p class="text-muted small">Current Profile Image</p>
+                </div>
+
+                <div class="col-md-9">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> Save Changes
+                            </button>
+                            <a href="{% url 'profile' %}" class="btn btn-secondary ms-2">
+                                <i class="fas fa-times me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
