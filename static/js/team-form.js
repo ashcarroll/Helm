@@ -8,7 +8,8 @@ $(document).ready(function() {
         // Tags-like visual style
         templateSelection: function(data) {
             if (!data.id) { return data.text; }
-            return $('<span class="badge bg-primary me-1">' + data.text + '</span>');
-        }
+            return $('<span class="badge bg-light text-dark border">' + data.text + '<i class="fas fa-times-circle"></i></span>');
+        }, 
+        selectionCssClass: 'select2-selection--clean'
     });
 });

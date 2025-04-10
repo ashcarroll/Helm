@@ -426,3 +426,41 @@ main {
 .profile-info {
     margin-left: var(--shadow-lg);
 }
+
+
+
+/* Select2 Fixes and Overrides */
+
+/* Fix for blue highlight on selected items */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #e9ecef;
+}
+
+/* Fix for the selection pills */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    color: #212529;
+}
+
+/* Remove the blue numbered button */
+.select2-selection__choice__remove {
+    border: none !important;
+    background: none !important;
+    color: #6c757d !important;
+    margin-right: 4px;
+}
+
+/* Clean up the remove button spacing */
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    margin-right: 5px;
+    color: #6c757d;
+}
