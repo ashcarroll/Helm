@@ -141,6 +141,11 @@ class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         self.project = get_object_or_404(Project, pk=kwargs['project_id'])
         return super().dispatch(request, *args, **kwargs)
     
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['project'] = self.project
+        return kwargs
+
     def form_valid(self, form):
         task = form.save(commit=False)
         task.project = self.project
@@ -176,6 +181,11 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         self.task = self.get_object()
         return super().dispatch(request, *args, **kwargs)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['project'] = self.project
+        return kwargs
     
     def get_queryset(self):
         user = self.request.user

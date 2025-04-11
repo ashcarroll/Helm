@@ -17,3 +17,11 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'assigned_to', 'status', 'due_date']
+
+    def __init__(self, *args, **kwargs):
+        project = kwargs.pop('project', None)
+        super(TaskForm, self).__init__(*args, **kwargs)
+
+        if project:
+            # Only have choics for assigned_to show for project team members
+            self.fields['assigned_to'].queryset = project.project_team.all()
