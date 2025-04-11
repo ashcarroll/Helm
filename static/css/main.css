@@ -302,11 +302,6 @@ main {
     background-color: transparent;
 }
 
-.project-card__footer .btn-group, 
-.project-card__footer .badge {
-    margin-left: auto;
-}
-
 .project-card__header {
     padding: 1.25rem 1.25rem 0.5rem;
 }
