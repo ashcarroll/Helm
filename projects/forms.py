@@ -5,7 +5,10 @@ from .models import Project, Task
 class ProjectForm(forms.ModelForm):
     project_team = forms.ModelMultipleChoiceField(
         queryset = User.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={
+            'class': 'form-control select2-multiple',
+            'data-placeholder': 'Select team members',
+        }),
         required = False
     )
 
