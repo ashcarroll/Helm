@@ -26,6 +26,16 @@ class ProjectListView(LoginRequiredMixin, ListView):
         context =  super().get_context_data(**kwargs)
         # Adding a boolean to see if user is a manager
         context['is_manager'] = self.request.user.groups.filter(name='Manager').exists()
+
+        # Adding all projects to context
+        context = ['all_project'] = Project.objects.all()
+
+        # Add a flag to show if it's showing all projects or filtered
+        context['show_all'] = self.request.GET.get('show_all', 'false') == 'true'
+
+        if context['show_all']:
+            context['projects'] = context['all_projects']
+
         return context
 
 

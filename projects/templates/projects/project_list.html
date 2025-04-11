@@ -13,6 +13,18 @@
             <i class="fas fa-folder-open me-2"></i> Projects
         </h2>
 
+        <!-- Toggle All Projects -->
+        {% if show_all %}
+            <a href="{% url 'project_list' %}?show_all=false" class="btn btn-outline-secondary me-2">
+                <i class="fas fa-filter me-1"></i> My Projects
+            </a>
+        {% else %}
+            <a href="{% url 'project_list'}?show_all=true" class="btn btn-outline-secondary me-2">
+                <i class="fas fa-globe me-1"></i> All Projects
+            </a>
+        {% endif %}
+    
+
         {% if is_manager %}
             <a href="{% url 'project_create' %}" class="btn btn-primary">
                 <i class="fa fa-plus me-1"></i> Create Project
@@ -120,6 +132,8 @@
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
+                            {% else %}
+                                <span class="badge bg-secondary">Read Only</span>
                             {% endif %}
                         </div>
                     </div>
