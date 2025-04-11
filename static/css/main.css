@@ -302,8 +302,8 @@ main {
     background-color: transparent;
 }
 
-.project-card__footer > .btn-group, 
-.project-card__footer > .badge {
+.project-card__footer .btn-group, 
+.project-card__footer .badge {
     margin-left: auto;
 }
 
