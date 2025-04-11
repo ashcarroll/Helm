@@ -32,4 +32,6 @@ class Profile(models.Model):
             )[0]
         else: 
             # Fallback to default image
-            return '/media/default.jpg'
+            return cloudinary_url(
+                "default.jpg", width=300, height=300, crop="lfill"
+            )[0]
