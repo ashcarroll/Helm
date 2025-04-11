@@ -194,7 +194,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['project'] = self.project
+        kwargs['project'] = self.task.project
         return kwargs
     
     def get_queryset(self):
