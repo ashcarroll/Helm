@@ -315,15 +315,15 @@ main {
     margin-top: 1rem;
 }
 
-.project-card.not-started { 
+.project-card.not_started { 
     border-top: 3px solid var(--status-not-started); 
 }
 
-.project-card.on-track {
+.project-card.on_track {
     border-top: 3px solid var(--status-on-track); 
 }
 
-.project-card.at-risk { 
+.project-card.at_risk { 
     border-top: 3px solid var(--status-at-risk); 
 }
 
