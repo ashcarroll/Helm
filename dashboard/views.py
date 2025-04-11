@@ -122,7 +122,6 @@ def task_completion_data(request):
                 status='DONE',
                 date_updated__date=current_date
             ).count()
-        
         else:
             # ICs see completion data for tasks assigned to them
             count = Task.objects.filter(
@@ -131,7 +130,7 @@ def task_completion_data(request):
                 date_updated__date=current_date
             ).count()
 
-            completion_counts.append(count)
+        completion_counts.append(count)
 
     data = {
         'dates': date_list,
