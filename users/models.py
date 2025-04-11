@@ -17,7 +17,7 @@ class Profile(models.Model):
         storage=MediaCloudinaryStorage(),
         null=True,
         blank=True,
-        default='default.jpg'
+        default='default_uej1cv.png'
     )
 
     def __str__(self):
@@ -33,5 +33,5 @@ class Profile(models.Model):
         else: 
             # Fallback to default image
             return cloudinary_url(
-                "default.jpg", width=300, height=300, crop="lfill"
+                "default_uej1cv.png", width=300, height=300, crop="lfill"
             )[0]
