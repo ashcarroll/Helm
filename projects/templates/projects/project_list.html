@@ -15,12 +15,12 @@
 
         <!-- Toggle All Projects -->
         {% if show_all %}
-            <a href="{% url 'project_list' %}?show_all=false" class="btn btn-outline-secondary me-2">
-                <i class="fas fa-filter me-1"></i> My Projects
+            <a href="{% url 'project_list' %}" class="btn btn-outline-secondary me-2">
+                <i class="fas fa-filter me-1"></i> Show My Projects
             </a>
         {% else %}
             <a href="{% url 'project_list'}?show_all=true" class="btn btn-outline-secondary me-2">
-                <i class="fas fa-globe me-1"></i> All Projects
+                <i class="fas fa-globe me-1"></i> Show All Projects
             </a>
         {% endif %}
     
