@@ -363,6 +363,80 @@ main {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Task Accordian Styling */
+.accordion-item {
+    border: none;
+    margin-bottom: 0.75rem;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.accordion-header {
+    background-color: white;
+}
+
+.accordion-button {
+    padding: 1rem 1.25rem;
+    background-color: var(--gray-100);
+    color: var(--gray-800);
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s ease;
+    border-radius: var(--border-radius-sm);
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--primary);
+    background-color: rgba(58, 119, 255, 0.05);
+    box-shadow: none;
+}
+
+.accordion-button:hover {
+    background-color: var(--gray-200);
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(58, 119, 255, 0.5);
+}
+
+.accordion-body .list-group-item {
+    transition: background-color 0.2s;
+}
+
+.accordion-body .list-group-item:hover {
+    background-color: var(--gray-100);
+}
+
+/* Styling for accordion status headers */
+.accordion-button[data-bs-target="#collapseTODO"] {
+    border-left: 4px solid var(--task-todo);
+}
+
+.accordion-button[data-bs-target="#collapseIN_PROGRESS"] {
+    border-left: 4px solid var(--task-in-progress);
+}
+
+.accordion-button[data-bs-target="#collapseBLOCKED"] {
+    border-left: 4px solid var(--task-blocked);
+}
+
+.accordion-button[data-bs-target="#collapseDONE"] {
+    border-left: 4px solid var(--task-done);
+}
+
+/* Arrow indicator */
+.accordion-button::after {
+    background-size: 1.25rem;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+}
+
+.accordion-button:not(.collapsed)::after {
+    opacity: 1;
+}
+
 
 /* Status indicators */
 .status-indicator {
