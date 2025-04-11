@@ -67,12 +67,12 @@ Use this Render.com link to access the site: https://helm-34tp.onrender.com
 
 Create a new user or log in with either of the following demo accounts to explore the functionality of the site:
 
-<em>Manager:</em> 
-Username: Eugene.Krabs
+<em>Manager:</em> <br>
+Username: Eugene.Krabs <br>
 Password: @4@YOuABnD
 
-<em>IC:</em> 
-Username: Mark.Scout
+<em>IC:</em> <br>
+Username: Mark.Scout <br>
 Password: w30Tjyi7z^
 
 ---
