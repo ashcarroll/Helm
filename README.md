@@ -18,13 +18,13 @@ A unified dashboard tool to consolidate this data would enable faster decision-m
 
 ## Application Features
 
-#### Real-time project status dashboards
+### Real-time project status dashboards
 Personalised dashboard with metrics relevant to the user such as:
 - Owned / Assigned project and task metrics
 - Assigned tasks overview
 - Visual data on assigned projects and tasks
 
-#### Team management
+### Team management
 - Assign users to teams so managers can see all members of their team appropriately
     - Flexible use cases for team management
         - People managers can create and see the ICs that report into them	
@@ -34,7 +34,7 @@ Personalised dashboard with metrics relevant to the user such as:
 - Resource management that prevents over allocation and burnout
     - Clearly see how many tasks each IC on a team is assigned to, enabling people managers to make better decisions around resource allocation
 
- #### Project management and tracking
+ ### Project management and tracking
  - Project creation and management
     - Create projects with clear start and end dates
     - Assign users to project team 
@@ -55,7 +55,7 @@ Personalised dashboard with metrics relevant to the user such as:
 - Project list filtering based on status
 
 
-#### Profile management
+### Profile management
 - View and update your user profile
 - Customise profile picture
 - View your personal activity
